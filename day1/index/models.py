@@ -38,7 +38,8 @@ class user(models.Model):
     upwd = models.CharField(max_length=20,verbose_name='密码')
     #用于找回密码
     uemail=models.EmailField(max_length=30,verbose_name='邮箱',default=None)
-    customer=models.ManyToManyField(customer,True)
+    #用户和客户多对多
+    customer=models.ManyToManyField(customer)
     isActive = models.BooleanField(default=True,verbose_name='状态')
     def __str__(self):
         return str(self.uname)
