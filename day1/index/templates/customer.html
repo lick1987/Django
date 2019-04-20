@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>客户管理</title>
+</head>
+<body>
+<h1>单位管理</h1>
+<h1><a href="/">返回首页</a></h1>
+<table border="1">
+
+    {% for i in uList %}
+     <input type="hidden" name="id" value="{{i.id}}">
+    <tr>
+    <th>{{ i.unit.uname }}</th>
+    <th>{{ i.unit.upwd }}</th>
+    <th>{{ i.unit.upwd }}</th>
+    <th><a href="/modifyUnit/{{ i.unit.id }}">修改</a></th>
+    <th><a href="/deletUnit/{{ i.unit.id }}">删除</a></th>
+    </tr>
+    {% endfor %}
+    <p>
+        <input type="button" id="add" value="增加" onclick="javascript:window.location.href='/addUnit'">
+    </p>
+</table>
+</body>
+</html>

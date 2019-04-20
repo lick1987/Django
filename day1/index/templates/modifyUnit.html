@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改单位</title>
+</head>
+<body>
+<p><a href="/">返回首页</a></p>
+    <form action="/modifyUnit1" method='post'>
+        {%csrf_token%}
+        <input type="hidden" name="id" value="{{unitMess.id}}">
+        <p>
+            单位名称：<input type="text" name='uname' value="{{unitMess.uname}}">
+        </p>
+        <p>
+            单位税号：<input type="text" name='upwd' value="{{unitMess.upwd}}">
+        </p>
+        <p>
+            <input type="submit" name='保存'>
+            <a href="/unit">退出</a>
+        </p>
+    </form>
+</body>
+</html>
