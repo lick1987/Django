@@ -209,5 +209,24 @@ def exit_view(request):
 #客户管理视图
 def customer_view(request):
     id = request.session.get('id')
-    customerAll=customer.objects.fiter()
+    User=user.objects.get(id=id)
+    customer=User.customer.filter(isActive=1)
+    custList=[]
+    #循环获取客户的单位
+    for custer in customer:
+        custDict={}
+        cList=[]
+        unitList=custer.unit.filter(isActive=1)
+        for u in unitList:
+            cDict={}
+            #单位名称
+            cDict['unitName']=u.uname
+            #单位税号
+            cDict['unitPwd']=u.upwd
+            #客户姓名
+            cDict['custer']=custer.uname
+            cList.append(cDict)
+        custDict['custer']=cList
+        custList.append(custDict)
+    print(custList)
     return render(request,'customer.html',locals())
