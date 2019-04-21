@@ -211,22 +211,87 @@ def customer_view(request):
     id = request.session.get('id')
     User=user.objects.get(id=id)
     customer=User.customer.filter(isActive=1)
-    custList=[]
-    #循环获取客户的单位
-    for custer in customer:
-        custDict={}
-        cList=[]
-        unitList=custer.unit.filter(isActive=1)
-        for u in unitList:
-            cDict={}
-            #单位名称
-            cDict['unitName']=u.uname
-            #单位税号
-            cDict['unitPwd']=u.upwd
-            #客户姓名
-            cDict['custer']=custer.uname
-            cList.append(cDict)
-        custDict['custer']=cList
-        custList.append(custDict)
-    print(custList)
+    # custList=[]
+    # #循环获取客户的单位
+    # for custer in customer:
+    #     custDict={}
+    #     cList=[]
+    #     unitList=custer.unit.filter(isActive=1)
+    #     for u in unitList:
+    #         cDict={}
+    #         #单位名称
+    #         cDict['unitName']=u.uname
+    #         #单位税号
+    #         cDict['unitPwd']=u.upwd
+    #         #客户姓名
+    #         cDict['custer']=custer.uname
+    #         #客户Id
+    #         cDict['custerId']=custer.id
+    #         #单位Id
+    #         cDict['unitId']=u.id
+    #         cList.append(cDict)
+    #     custDict['custer']=cList
+    #     custList.append(custDict)
+    # print(custList)
     return render(request,'customer.html',locals())
+def deletCuster_views(request,id):
+    userId = request.session.get('id')
+    print(userId)
+    print(id)
+    User = user.objects.get(id=userId)
+    customer=User.customer.filter(id=id)
+    print(customer)
+    # customer[0].isActive=0
+    # customer[0].save()
+    return customer_view(request)
+
+#增加单位视图
+def addCustomer_view(request):
+    if request.method == "GET":
+        return render(request,'addUnit.html')
+    elif request.method=="POST":
+        id=request.session['id']
+        userId=user.objects.filter(id=id)
+        uname = request.POST.get('uname', None)
+        upwd = request.POST.get('upwd', None)
+        print(uname)
+        print(upwd)
+        #查询是否存在
+        getName = unit.objects.filter(uname=uname,upwd=upwd)
+        if not getName:
+            dic = {
+                'upwd': upwd,
+                'uname': uname,
+            }
+            unit(**dic).save()
+        #获取新增单位ID
+        unitID=unit.objects.get(uname=uname,upwd=upwd)
+        #查询表里面是否存在
+        result=allData.objects.filter(user=userId[0],unit=unitID)
+        status=0
+        if  result:
+            status=1
+            dic = {
+                'status': status,
+                'message': '单位已存在'
+
+            }
+            resp = HttpResponse(json.dumps(dic))
+        #没有则保存
+        else:
+            dic={
+                'user':userId[0],
+                'unit':unitID
+            }
+            allData(**dic).save()
+            dic = {
+                'status': status,
+                'message': '添加成功'
+            }
+            resp = HttpResponse(json.dumps(dic))
+        return resp
+#修改单位
+def modifyCustomer_views(request,id=None):
+    custMess = customer.objects.get(id=id)
+    print(custMess.uchoice)
+    return render(request,'modifyCustomer.html',locals())

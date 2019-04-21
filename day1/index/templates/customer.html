@@ -5,26 +5,30 @@
     <title>客户管理</title>
 </head>
 <body>
-<h1>单位管理</h1>
+<h1>客户视图</h1>
 <h1><a href="/">返回首页</a></h1>
 <table border="1">
     <tr>
             <th>客户名称</th>
-            <th>单位名称</th>
-            <th>单位税号</th>
-            <th>本月订单</th>
-            <th>合计订单</th>
+            <th>手机号</th>
+            <th>微信号</th>
+            <th>QQ号</th>
+            <th>收货地址</th>
+            <th>发票类型</th>
+            <th>修改</th>
+            <th>删除</th>
             </tr>
-    {% for i in custList %}
-        {% for j in i.custer %}
-            <tr>
-            <th>{{ j.custer }}</th>
-            <th>{{ j.unitName }}</th>
-            <th>{{ j.unitPwd }}</th>
-            <th><a href="/modifyUnit/{{ i.unit.id }}">修改</a></th>
-            <th><a href="/deletUnit/{{ i.unit.id }}">删除</a></th>
-            </tr>
-        {% endfor %}
+    {% for i in customer %}
+        <tr>
+        <th>{{ i.uname }}</th>
+        <th>{{ i.uphone }}</th>
+        <th>{{ i.uwei }}</th>
+        <th>{{ i.uqq }}</th>
+        <th>{{ i.uaddres }}</th>
+        <th>{{ i.uchoice }}</th>
+        <th><a href="/modifyCuster/{{ i.id }}">修改</a></th>
+        <th><a href="/deletCuster/{{ i.id }}">删除</a></th>
+        </tr>
     {% endfor %}
     <p>
         <input type="button" id="add" value="增加" onclick="javascript:window.location.href='/addUnit'">

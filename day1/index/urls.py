@@ -9,6 +9,8 @@ urlpatterns = [
     url(r'^$',index_views),
     url(r'^unit$',unit_views),
     url(r'^deletUnit/(\d*)',deleteUnit_views),
+    url(r'^deletCuster/(\d*)',deletCuster_views),
+    url(r'^modifyCuster/(\d*)',modifyCustomer_views),
     url(r'^modifyUnit/(\d*)',modifyUnit_views),
     url(r'^modifyUnit1',modifyUnit_views1),
     url(r'^checkLogin',check_login_views),
